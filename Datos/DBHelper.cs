@@ -14,13 +14,14 @@ namespace AppPresupuestoCarpinteria.Datos
 
         // creo y configuro la conexion
         private SqlConnection connection;
-        string ConnectionString = @"Data Source=172.16.10.196;Initial Catalog=Carpinteria_2023;User ID=alumno1w1;Password=alumno1w1";
+        // string connectionString = @"Data Source=172.16.10.196;Initial Catalog=Carpinteria_2023;User ID=alumno1w1;Password=alumno1w1";
+        string connectionString = @"Data Source=.\SQLEXPRESS;Initial Catalog=CARPINTERIA_2023;Integrated Security=True";
 
 
         // constructor
         public DBHelper()
         {
-            connection = new SqlConnection(ConnectionString);
+            connection = new SqlConnection(connectionString);
         }
 
 
@@ -28,37 +29,46 @@ namespace AppPresupuestoCarpinteria.Datos
         // pasar aca los metodos ProximoPresupuesto() y CargarProductos()
 
 
-        public int ProximoPresupuesto()
+        public string ProximoPresupuesto()
         {
-            // abro la conexion
-            connection.Open();
+            try
+            {
 
-            // creo y configuro el comando
-            SqlCommand command = new SqlCommand();
-            command.Connection = connection;
-            command.CommandType = CommandType.StoredProcedure;
-            command.CommandText = "SP_PROXIMO_ID";
+                // abro la conexion
+                connection.Open();
 
-            // creo y configuro el parametro porque el SP devuelve un parametro
-            SqlParameter parameter = new SqlParameter();
-            parameter.ParameterName = "@next";
-            parameter.SqlDbType = SqlDbType.Int;
-            parameter.Direction = ParameterDirection.Output;
+                // creo y configuro el comando con el SP
+                SqlCommand command = new SqlCommand();
+                command.Connection = connection;
+                command.CommandType = CommandType.StoredProcedure;
+                command.CommandText = "SP_PROXIMO_ID";
 
-            // paso el parametro al comando (para que traiga el resultado del SP)
-            command.Parameters.Add(parameter);
+                // creo y configuro un parametro porque el SP devuelve un parametro
+                SqlParameter parameter = new SqlParameter();
+                parameter.ParameterName = "@next";
+                parameter.SqlDbType = SqlDbType.Int;
+                parameter.Direction = ParameterDirection.Output;
 
-            // ejecuto el comando
-            command.ExecuteNonQuery();
+                // paso el parametro al comando (para que traiga el resultado del SP)
+                command.Parameters.Add(parameter);
 
-            connection.Close();
+                // ejecuto el comando
+                command.ExecuteNonQuery();
 
+                connection.Close();
+                
+                return parameter.Value.ToString();
 
-            return (int)parameter.Value;
+            }
+            catch (Exception ex)
+            {
+                return "Hubo un error de datos";
+            }
+
         }
 
 
-        private DataTable CargarProductos() // ver de agregar el nombre del SP como un parametro
+        public DataTable CargarProductos() // ver de agregar el nombre del SP como un parametro
         {
             // abro la conexion
             connection.Open();
@@ -95,7 +105,7 @@ namespace AppPresupuestoCarpinteria.Datos
                 command.Connection = connection;
                 command.Transaction = transaction; // Asigno el objeto transaction al command
                 command.CommandType = CommandType.StoredProcedure;
-                command.CommandText = "SP_INSERTaR_MAESTRO"; // procedimientos almacenados creados en la bd
+                command.CommandText = "SP_INSERTAR_MAESTRO"; // procedimientos almacenados creados en la bd
 
                 // configuracion de los parametros de entrada del SP
                 command.Parameters.AddWithValue("@cliente", nuevoPre.Cliente);
@@ -104,7 +114,7 @@ namespace AppPresupuestoCarpinteria.Datos
 
                 // creo y configuro el parametro porque el SP devuelve un parametro (parametro de salida): nro de presupuesto
                 SqlParameter parameter = new SqlParameter();
-                parameter.ParameterName = "@next";
+                parameter.ParameterName = "@presupuesto_nro";
                 parameter.SqlDbType = SqlDbType.Int;
                 parameter.Direction = ParameterDirection.Output;
 
