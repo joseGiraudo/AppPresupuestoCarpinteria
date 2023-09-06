@@ -38,9 +38,15 @@
             this.btnEditar = new System.Windows.Forms.Button();
             this.btnEliminar = new System.Windows.Forms.Button();
             this.btnSalir = new System.Windows.Forms.Button();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dgvPresupuestos = new System.Windows.Forms.DataGridView();
             this.txtCliente = new System.Windows.Forms.TextBox();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.colid = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colFecha = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colCliente = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDescuento = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colTotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colAccion = new System.Windows.Forms.DataGridViewButtonColumn();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvPresupuestos)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -92,6 +98,7 @@
             this.btnConsultar.TabIndex = 5;
             this.btnConsultar.Text = "Consultar";
             this.btnConsultar.UseVisualStyleBackColor = true;
+            this.btnConsultar.Click += new System.EventHandler(this.btnConsultar_Click);
             // 
             // label4
             // 
@@ -129,13 +136,20 @@
             this.btnSalir.Text = "Salir";
             this.btnSalir.UseVisualStyleBackColor = true;
             // 
-            // dataGridView1
+            // dgvPresupuestos
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(78, 193);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(668, 150);
-            this.dataGridView1.TabIndex = 10;
+            this.dgvPresupuestos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvPresupuestos.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colid,
+            this.colFecha,
+            this.colCliente,
+            this.colDescuento,
+            this.colTotal,
+            this.colAccion});
+            this.dgvPresupuestos.Location = new System.Drawing.Point(78, 193);
+            this.dgvPresupuestos.Name = "dgvPresupuestos";
+            this.dgvPresupuestos.Size = new System.Drawing.Size(668, 150);
+            this.dgvPresupuestos.TabIndex = 10;
             // 
             // txtCliente
             // 
@@ -144,13 +158,43 @@
             this.txtCliente.Size = new System.Drawing.Size(213, 20);
             this.txtCliente.TabIndex = 11;
             // 
+            // colid
+            // 
+            this.colid.HeaderText = "";
+            this.colid.Name = "colid";
+            // 
+            // colFecha
+            // 
+            this.colFecha.HeaderText = "Fecha";
+            this.colFecha.Name = "colFecha";
+            // 
+            // colCliente
+            // 
+            this.colCliente.HeaderText = "Cliente";
+            this.colCliente.Name = "colCliente";
+            // 
+            // colDescuento
+            // 
+            this.colDescuento.HeaderText = "Descuento";
+            this.colDescuento.Name = "colDescuento";
+            // 
+            // colTotal
+            // 
+            this.colTotal.HeaderText = "Importe";
+            this.colTotal.Name = "colTotal";
+            // 
+            // colAccion
+            // 
+            this.colAccion.HeaderText = "Column1";
+            this.colAccion.Name = "colAccion";
+            // 
             // FrmConsultarPresupuesto
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.txtCliente);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.dgvPresupuestos);
             this.Controls.Add(this.btnSalir);
             this.Controls.Add(this.btnEliminar);
             this.Controls.Add(this.btnEditar);
@@ -164,7 +208,7 @@
             this.Name = "FrmConsultarPresupuesto";
             this.Text = "FrmConsultarPresupuesto";
             this.Load += new System.EventHandler(this.FrmConsultarPresupuesto_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvPresupuestos)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -182,7 +226,13 @@
         private System.Windows.Forms.Button btnEditar;
         private System.Windows.Forms.Button btnEliminar;
         private System.Windows.Forms.Button btnSalir;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dgvPresupuestos;
         private System.Windows.Forms.TextBox txtCliente;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colid;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colFecha;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colCliente;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colDescuento;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colTotal;
+        private System.Windows.Forms.DataGridViewButtonColumn colAccion;
     }
 }

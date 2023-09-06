@@ -24,9 +24,49 @@ namespace AppPresupuestoCarpinteria.Datos
             connection = new SqlConnection(connectionString);
         }
 
+        public DataTable Consultar(string nombreSP)
+        {
+            connection.Open();
+
+            // configuro el comando con el SP pasado por parametros
+            SqlCommand command = new SqlCommand();
+            command.Connection = connection;
+            command.CommandType = CommandType.StoredProcedure;
+            command.CommandText = nombreSP;
+
+            DataTable table = new DataTable();
+            table.Load(command.ExecuteReader());
+
+            connection.Close();
+
+            return table;
+        }
 
 
-        // pasar aca los metodos ProximoPresupuesto() y CargarProductos()
+        public DataTable Consultar(string nombreSP, List<Parametro> listParam)
+        {
+            connection.Open();
+
+            // configuro el comando con el SP pasado por parametros
+            SqlCommand command = new SqlCommand();
+            command.Connection = connection;
+            command.CommandType = CommandType.StoredProcedure;
+            command.CommandText = nombreSP;
+
+            command.Parameters.Clear();
+
+            foreach(Parametro param in listParam)
+            {
+                command.Parameters.AddWithValue(param.Nombre, param.Valor);
+            }
+
+            DataTable table = new DataTable();
+            table.Load(command.ExecuteReader());
+
+            connection.Close();
+
+            return table;
+        }
 
 
         public string ProximoPresupuesto()
