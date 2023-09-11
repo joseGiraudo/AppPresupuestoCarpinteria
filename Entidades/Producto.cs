@@ -12,7 +12,7 @@ namespace AppPresupuestoCarpinteria.Entidades
         private string nombre;
         private double precio;
 
-
+        // cambio para practicar con github
         public int NroProducto { get { return nroProducto; } set { nroProducto = value; } }
         public string Nombre { get { return nombre; } set { nombre = value; } }
         public double Precio { get { return precio; } set { precio = value; } }
